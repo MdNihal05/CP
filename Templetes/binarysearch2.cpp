@@ -1,13 +1,11 @@
- bool bin_search(vector<int> arr){
-   int l = 0, r = n;
-   while (r-l > 1) {
-       int m = (l + r) / 2;
- 
-       if (predicate(m))
-           l = m;
-       else
-           r = m;
-   }
+int low = 0, high = n;
+while (high-low > 1) {
+    int mid = low+(high-low) / 2;
+    if (ok(mid))
+        high = mid;
+    else
+        low = mid;
 }
-//l will be last true
-// r will be first false
+
+// low will be last false
+// high will be first true
