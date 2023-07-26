@@ -1,14 +1,8 @@
-int l = 0, r = n, res;
-
-while (l <= r) {
-
-    int mid = (l + r) >> 1;
-
-    if (){
-        l = mid + 1;
-    }
-
-    else {
-        r = mid - 1;
-    }
+int low = 0, high = n, ans = n;
+while (low <= high) {
+    int mid = low + (high - low) / 2;
+    if (ok(mid)) {
+    high = mid - 1;
+    ans = mid;
+    } else low = mid + 1;
 }
