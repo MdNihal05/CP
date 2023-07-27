@@ -10,7 +10,7 @@ using namespace std;
 
 
 void solve() {
-    
+
 }
 
 
@@ -19,8 +19,7 @@ signed   main()
     Md_Nihal;
     int testcases = 1, i = 0;    cin >> testcases;
     while ((i++) < testcases) {
-        //cout<<"case# : "<<testcases<<endl; 
-        solve() ; 
-        cout << endl; 
+        /* cout<<"case# : "<<testcases<<endl; */ solve() ;
+        cout << endl;
     }
 }
