@@ -16,7 +16,7 @@ template<typename typC, typename typD> istream &operator>>(istream &cin, pair<ty
 template<typename typC> istream &operator>>(istream &cin, vector<typC> &a) { for (auto &x : a) cin >> x; return cin; }
 
 
-#ifndef md_nihal
+#ifndef ONLINE_JUDGE
 #include "debug.h"
 #else
 #define debug(x...);
