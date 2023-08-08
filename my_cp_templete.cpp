@@ -18,8 +18,10 @@ template<typename typC> istream &operator>>(istream &cin, vector<typC> &a) { for
 
 #ifndef ONLINE_JUDGE
 #include "debug.h"
+#define _print_testcase(x) cout<<"Test Case # "<<x<<endl;
 #else
 #define debug(x...);
+#define _print_testcase(x...);
 #endif
 /**************************************************************************************************/
 
@@ -37,7 +39,7 @@ signed   main()
     Md_Nihal;
     int testcases = 1, i = 0;     cin >> testcases;
     while ((i++) < testcases) {
-        /* cout<<"case# : "<<testcases<<endl; */ solve() ;
+        _print_testcase(i) ; solve() ;
         cout << endl;
     }
 }
