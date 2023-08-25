@@ -14,10 +14,12 @@ using namespace std;
 
 template<typename typC, typename typD> istream &operator>>(istream &cin, pair<typC, typD> &a) { return cin >> a.first >> a.second; }
 template<typename typC> istream &operator>>(istream &cin, vector<typC> &a) { for (auto &x : a) cin >> x; return cin; }
-
+template<typename typC> ostream &operator<<(ostream &cout, vector<typC> &a) { for (auto &x : a) cout << x << " "; cout << endl; return cout; }
+template <class ...Args> auto &getm(Args &...args) { return (cin >> ... >> args); }
+#define get(...) __VA_ARGS__; getm(__VA_ARGS__)
 
 #ifndef ONLINE_JUDGE
-#include "debug.h"
+#include "debug.hpp"
 #define _print_testcase(x) cout<<"Test Case # "<<x<<endl;
 #else
 #define debug(x...);
@@ -28,7 +30,7 @@ template<typename typC> istream &operator>>(istream &cin, vector<typC> &a) { for
 
 
 void solve() {
-    
+
 }
 
 
@@ -39,7 +41,8 @@ signed   main()
     Md_Nihal;
     int testcases = 1, i = 0;     cin >> testcases;
     while ((i++) < testcases) {
-        _print_testcase(i) ; solve() ;
+        //_print_testcase(i) ;
+        solve() ;
         cout << endl;
     }
 }
