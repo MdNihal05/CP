@@ -27,6 +27,6 @@ ostream &operator<<(ostream &os, const T &c) {
   (MACRO, __VA_ARGS__)
 #define watch(x) cout << #x <<" = " << (x) << "\n";
 #define debug(...)                                                             \
-  cerr << "\033[2;31mLine " << __LINE__ << ": \033[0;m";                       \
+  cerr<< "Line -> " << __LINE__ <<endl;                       \
   FOR_EACH_MACRO(watch, __VA_ARGS__)                                           \
-  cerr << "\n"
+  cout << "\n"
