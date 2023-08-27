@@ -7,6 +7,8 @@ using namespace std;
 #define mod9 1e9+7
 #define endl "\n"
 #define int long long
+#define ll int
+#define size(a) (int)a.size()
 #define vi vector<int>
 #define vpi vector<pair<int,int>>
 #define vs vector<string>
@@ -14,12 +16,11 @@ using namespace std;
 
 template<typename typC, typename typD> istream &operator>>(istream &cin, pair<typC, typD> &a) { return cin >> a.first >> a.second; }
 template<typename typC> istream &operator>>(istream &cin, vector<typC> &a) { for (auto &x : a) cin >> x; return cin; }
-template<typename typC> ostream &operator<<(ostream &cout, vector<typC> &a) { for (auto &x : a) cout << x << " "; cout << endl; return cout; }
 template <class ...Args> auto &getm(Args &...args) { return (cin >> ... >> args); }
 #define get(...) __VA_ARGS__; getm(__VA_ARGS__)
 
 #ifndef ONLINE_JUDGE
-#include "debug.hpp"
+#include "/home/anonymous/nihal/others/CP/constest/debug.hpp"
 #define _print_testcase(x) cout<<"Test Case # "<<x<<endl;
 #else
 #define debug(x...);
@@ -30,7 +31,7 @@ template <class ...Args> auto &getm(Args &...args) { return (cin >> ... >> args)
 
 
 void solve() {
-
+	 
 }
 
 
@@ -39,7 +40,7 @@ void solve() {
 signed   main()
 {
     Md_Nihal;
-    int testcases = 1, i = 0;     cin >> testcases;
+    int testcases = 1, i = 0;    cin >> testcases;
     while ((i++) < testcases) {
         //_print_testcase(i) ;
         solve() ;
