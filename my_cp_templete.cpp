@@ -5,10 +5,11 @@ using namespace std;
 #define Md_Nihal ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
 
 #define mod9 1e9+7
+#define ull unsigned long long
 #define endl "\n"
 #define int long long
 #define ll int
-#define size(a) (int)a.size()
+#define sz(a) (int)a.size()
 #define vi vector<int>
 #define vpi vector<pair<int,int>>
 #define vs vector<string>
@@ -21,29 +22,28 @@ template <class ...Args> auto &getm(Args &...args) { return (cin >> ... >> args)
 
 #ifndef ONLINE_JUDGE
 #include "/home/anonymous/nihal/others/CP/constest/debug.hpp"
-#define _print_testcase(x) cout<<"Test Case # "<<x<<endl;
 #else
 #define debug(x...);
-#define _print_testcase(x...);
 #endif
-/**************************************************************************************************/
+
+/*==========================================================================================================*/
 
 
 
 void solve() {
-	 
+
 }
 
 
 
-/**************************************************************************************************/
+/*==========================================================================================================*/
+
 signed   main()
 {
-    Md_Nihal;
-    int testcases = 1, i = 0;    cin >> testcases;
-    while ((i++) < testcases) {
-        //_print_testcase(i) ;
-        solve() ;
-        cout << endl;
-    }
+	Md_Nihal;
+	int testcases = 1, i = 0;    cin >> testcases;
+	while ((i++) < testcases) {
+		solve() ;
+		cout << endl;
+	}
 }
