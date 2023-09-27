@@ -18,9 +18,16 @@ const int N = 1e6;
 const int inf = LONG_LONG_MAX;
 
 
-template<typename typC, typename typD> istream &operator>>(istream &cin, pair<typC, typD> &a) { return cin >> a.first >> a.second; }
-template<typename typC> istream &operator>>(istream &cin, vector<typC> &a) { for (auto &x : a) cin >> x; return cin; }
-template <class ...Args> auto &getm(Args &...args) { return (cin >> ... >> args); }
+template<typename typC, typename typD> istream &operator>>(istream &cin, pair<typC, typD> &a) {
+    return cin >> a.first >> a.second;
+}
+template<typename typC> istream &operator>>(istream &cin, vector<typC> &a) {
+    for (auto &x : a) cin >> x;
+    return cin;
+}
+template <class ...Args> auto &getm(Args &...args) {
+    return (cin >> ... >> args);
+}
 #define get(...) __VA_ARGS__; getm(__VA_ARGS__)
 
 
@@ -41,7 +48,7 @@ void build(int s, int e, int i, vector<int> &a)
     int mid = s + (e - s) / 2;
     build(s, mid, 2 * i + 1, a);
     build(mid + 1, e, 2 * i + 2, a);
-    segtree[i] = segtree[2 * i + 1] & segtree[2 * i + 2];
+    segtree[i] = __gcd(segtree[2 * i + 1] , segtree[2 * i + 2]); // change 
 }
 
 int range(int s, int e, int i, int qs, int qe)
@@ -49,11 +56,16 @@ int range(int s, int e, int i, int qs, int qe)
     if (qs <= s && qe >= e)
         return segtree[i];
     if (qs > e || qe < s)
-        return INT_MAX;
+        return INT_MIN;
+        /*------change--------*/
+        //for and,min ->INT_MAX
+        //for sum, xor,gcd -> 0
+        //for max ->INT_MIN
+        
     int mid = s + (e - s) / 2;
     int l = range(s, mid, 2 * i + 1, qs, qe);
     int r = range(mid + 1, e, 2 * i + 2, qs, qe);
-    return l & r;
+    return __gcd(l,r);  //change 
 }
 
 
@@ -63,24 +75,18 @@ int range(int s, int e, int i, int qs, int qe)
 
 void solve() {
 
-    int n; cin >> n;
-    vi v(n); cin >> v;
-    int q; cin >> q;
+    int n;
+    cin >> n;
+    vi v(n);
+    cin >> v;
+    int q;
+    cin >> q;
     segtree.resize(4 * n);
     build(0, n - 1, 0, v);
-    for (int i = 0; i < q; ++i) {
-        int l, r; cin >> l >> r;
-        l--;
-        int low = l, high = n - 1, ans = -1;
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            int ok = range(0, n - 1, 0, l, mid);
-            if (ok >= r) {
-                low = mid + 1;
-                ans = mid;
-            } else high = mid - 1;
-        }
-        (ans >= 0) ? cout << ans + 1 << " " : cout << ans << " ";
+    while(q--) {
+        int l,r;
+        cin>>l>>r;
+        cout<<range(0,n-1,0,l,r)<<endl;
     }
 
 }
@@ -92,7 +98,8 @@ void solve() {
 signed   main()
 {
     Md_Nihal;
-    int testcases = 1, i = 0;    cin >> testcases;
+    int testcases = 1, i = 0;
+    cin >> testcases;
     while ((i++) < testcases) {
         solve() ;
         cout << endl;
