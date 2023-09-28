@@ -1,9 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <climits>
-#include <numeric>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 template <typename T>
@@ -14,8 +9,6 @@ private:
         T maxVal;
         T minVal;
         T addVal;
-        T gcdVal;
-        T lcmVal;
     };
 
     vector<Node> tree;
@@ -40,8 +33,6 @@ private:
             tree[v].sumVal = arr[tl];
             tree[v].maxVal = arr[tl];
             tree[v].minVal = arr[tl];
-            tree[v].gcdVal = arr[tl];
-            tree[v].lcmVal = arr[tl];
         } else {
             int tm = (tl + tr) / 2;
             build(v * 2, tl, tm);
@@ -49,8 +40,6 @@ private:
             tree[v].sumVal = tree[v * 2].sumVal + tree[v * 2 + 1].sumVal;
             tree[v].maxVal = max(tree[v * 2].maxVal, tree[v * 2 + 1].maxVal);
             tree[v].minVal = min(tree[v * 2].minVal, tree[v * 2 + 1].minVal);
-            tree[v].gcdVal = gcd(tree[v * 2].gcdVal, tree[v * 2 + 1].gcdVal);
-            tree[v].lcmVal = lcm(tree[v * 2].lcmVal, tree[v * 2 + 1].lcmVal);
         }
     }
 
@@ -69,7 +58,7 @@ private:
 
     T queryMax(int v, int tl, int tr, int l, int r) {
         if (l > r) {
-            return INT_MIN; // Neutral element for max
+            return numeric_limits<T>::min(); // Neutral element for max
         }
         if (tl == l && tr == r) {
             return tree[v].maxVal;
@@ -82,7 +71,7 @@ private:
 
     T queryMin(int v, int tl, int tr, int l, int r) {
         if (l > r) {
-            return INT_MAX; // Neutral element for min
+            return numeric_limits<T>::max(); // Neutral element for min
         }
         if (tl == l && tr == r) {
             return tree[v].minVal;
@@ -93,32 +82,6 @@ private:
         return min(leftValue, rightValue);
     }
 
-    T queryGCD(int v, int tl, int tr, int l, int r) {
-        if (l > r) {
-            return 0; // Neutral element for GCD
-        }
-        if (tl == l && tr == r) {
-            return tree[v].gcdVal;
-        }
-        int tm = (tl + tr) / 2;
-        T leftValue = queryGCD(v * 2, tl, tm, l, min(r, tm));
-        T rightValue = queryGCD(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r);
-        return gcd(leftValue, rightValue);
-    }
-
-    T queryLCM(int v, int tl, int tr, int l, int r) {
-        if (l > r) {
-            return 1; // Neutral element for LCM
-        }
-        if (tl == l && tr == r) {
-            return tree[v].lcmVal;
-        }
-        int tm = (tl + tr) / 2;
-        T leftValue = queryLCM(v * 2, tl, tm, l, min(r, tm));
-        T rightValue = queryLCM(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r);
-        return lcm(leftValue, rightValue);
-    }
-
     void updateAdd(int v, int tl, int tr, int l, int r, T newVal) {
         if (l > r) return;
         if (l == tl && r == tr) {
@@ -126,8 +89,6 @@ private:
             tree[v].sumVal += newVal * (tr - tl + 1);
             tree[v].maxVal += newVal;
             tree[v].minVal += newVal;
-            tree[v].gcdVal += newVal;
-            tree[v].lcmVal += newVal;
         } else {
             int tm = (tl + tr) / 2;
             updateAdd(v * 2, tl, tm, l, min(r, tm), newVal);
@@ -135,13 +96,6 @@ private:
             tree[v].sumVal = tree[v * 2].sumVal + tree[v * 2 + 1].sumVal;
             tree[v].maxVal = max(tree[v * 2].maxVal, tree[v * 2 + 1].maxVal);
             tree[v].minVal = min(tree[v * 2].minVal, tree[v * 2 + 1].minVal);
-            tree[v].gcdVal = gcd(tree[v * 2].gcdVal, tree[v * 2 + 1].gcdVal);
-            tree[v].lcmVal = lcm(tree[v * 2].lcmVal, tree[v * 2 + 1].lcmVal);
-            tree[v].sumVal += tree[v].addVal * (tr - tl + 1);
-            tree[v].maxVal += tree[v].addVal;
-            tree[v].minVal += tree[v].addVal;
-            tree[v].gcdVal += tree[v].addVal;
-            tree[v].lcmVal += tree[v].addVal;
         }
     }
 
@@ -165,14 +119,6 @@ public:
         return queryMin(1, 0, n - 1, l, r);
     }
 
-    T rangeGCDQuery(int l, int r) {
-        return queryGCD(1, 0, n - 1, l, r);
-    }
-
-    T rangeLCMQuery(int l, int r) {
-        return queryLCM(1, 0, n - 1, l, r);
-    }
-
     void rangeAdd(int l, int r, T newVal) {
         updateAdd(1, 0, n - 1, l, r, newVal);
     }
@@ -181,26 +127,21 @@ public:
 int main() {
     vector<int> arr = {12, 18, 24, 36, 48};
 
-// Create an instance of the SegmentTree for addition, maximum, minimum, GCD, and LCM (integer type)
+    // Create an instance of the SegmentTree for addition, maximum, and minimum (integer type)
     SegmentTree<int> multiOpSegmentTree(arr);
 
-// Example usage of various queries and updates
+    // Example usage of various queries and updates
     cout << "Sum in range [1, 3]: " << multiOpSegmentTree.rangeSumQuery(1, 3) << endl;
     cout << "Max in range [0, 4]: " << multiOpSegmentTree.rangeMaxQuery(0, 4) << endl;
     cout << "Min in range [2, 4]: " << multiOpSegmentTree.rangeMinQuery(2, 4) << endl;
-    cout << "GCD in range [0, 2]: " << multiOpSegmentTree.rangeGCDQuery(0, 2) << endl;
-    cout << "LCM in range [1, 4]: " << multiOpSegmentTree.rangeLCMQuery(1, 4) << endl;
 
-// Add 5 to the range [1, 3]
+    // Add 5 to the range [1, 3]
     multiOpSegmentTree.rangeAdd(1, 3, 5);
 
-// Query again after updates
+    // Query again after updates
     cout << "Sum in range [1, 3]: " << multiOpSegmentTree.rangeSumQuery(1, 3) << endl;
     cout << "Max in range [0, 4]: " << multiOpSegmentTree.rangeMaxQuery(0, 4) << endl;
-    cout << "Min in range [2, 4]: " << multiOpSegmentTree.rangeMinQuery(2, 4)
-         << endl;
-    cout << "GCD in range [0, 2]: " << multiOpSegmentTree.rangeGCDQuery(0, 2) << endl;
-    cout << "LCM in range [1, 4]: " << multiOpSegmentTree.rangeLCMQuery(1, 4) << endl;
+    cout << "Min in range [2, 4]: " << multiOpSegmentTree.rangeMinQuery(2, 4) << endl;
 
     return 0;
 }
