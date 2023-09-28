@@ -1,4 +1,4 @@
-namespace combi {
+namespace combinations {
 const int MAXN = 1000005; // Adjust the maximum value of n as needed
 const int MOD = 1000000007; // Change the MOD value as needed
 int fac[MAXN], inv[MAXN], finv[MAXN];
@@ -39,4 +39,4 @@ ull Inv(int x) {
     return power(x, MOD - 2, MOD);
 }
 };
-using namespace combi;
+using namespace combinations;
