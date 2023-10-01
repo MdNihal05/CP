@@ -1,5 +1,10 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <limits>
+
 using namespace std;
+
+const int SZ = 1 << 17;
 
 template <typename T>
 class SegmentTree {
@@ -9,6 +14,7 @@ private:
         T maxVal;
         T minVal;
         T addVal;
+        T xorVal;
     };
 
     vector<Node> tree;
@@ -28,74 +34,50 @@ private:
         return (a / gcd(a, b)) * b;
     }
 
-    void build(int v, int tl, int tr) {
-        if (tl == tr) {
-            tree[v].sumVal = arr[tl];
-            tree[v].maxVal = arr[tl];
-            tree[v].minVal = arr[tl];
+    void push(int i, int l, int r) {
+        if (tree[i].addVal != 0) {
+            tree[i].sumVal += (r - l + 1) * tree[i].addVal;
+            tree[i].maxVal += tree[i].addVal;
+            tree[i].minVal += tree[i].addVal;
+            if (l < r) {
+                tree[2 * i].addVal += tree[i].addVal;
+                tree[2 * i + 1].addVal += tree[i].addVal;
+            }
+            tree[i].addVal = 0;
+        }
+        if (tree[i].xorVal != 0) {
+            tree[i].sumVal ^= (r - l + 1) * tree[i].xorVal;
+            tree[i].maxVal ^= tree[i].xorVal;
+            tree[i].minVal ^= tree[i].xorVal;
+            if (l < r) {
+                tree[2 * i].xorVal ^= tree[i].xorVal;
+                tree[2 * i + 1].xorVal ^= tree[i].xorVal;
+            }
+            tree[i].xorVal = 0;
+        }
+    }
+
+    void pull(int i, int l, int r) {
+        int m = (l + r) / 2;
+        push(2 * i, l, m);
+        push(2 * i + 1, m + 1, r);
+        tree[i].sumVal = tree[2 * i].sumVal + tree[2 * i + 1].sumVal;
+        tree[i].maxVal = max(tree[2 * i].maxVal, tree[2 * i + 1].maxVal);
+        tree[i].minVal = min(tree[2 * i].minVal, tree[2 * i + 1].minVal);
+    }
+
+    void build(int i, int l, int r) {
+        if (l == r) {
+            tree[i].sumVal = arr[l];
+            tree[i].maxVal = arr[l];
+            tree[i].minVal = arr[l];
+            tree[i].addVal = 0;
+            tree[i].xorVal = 0;
         } else {
-            int tm = (tl + tr) / 2;
-            build(v * 2, tl, tm);
-            build(v * 2 + 1, tm + 1, tr);
-            tree[v].sumVal = tree[v * 2].sumVal + tree[v * 2 + 1].sumVal;
-            tree[v].maxVal = max(tree[v * 2].maxVal, tree[v * 2 + 1].maxVal);
-            tree[v].minVal = min(tree[v * 2].minVal, tree[v * 2 + 1].minVal);
-        }
-    }
-
-    T querySum(int v, int tl, int tr, int l, int r) {
-        if (l > r) {
-            return 0; // Neutral element for sum
-        }
-        if (tl == l && tr == r) {
-            return tree[v].sumVal;
-        }
-        int tm = (tl + tr) / 2;
-        T leftValue = querySum(v * 2, tl, tm, l, min(r, tm));
-        T rightValue = querySum(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r);
-        return leftValue + rightValue;
-    }
-
-    T queryMax(int v, int tl, int tr, int l, int r) {
-        if (l > r) {
-            return numeric_limits<T>::min(); // Neutral element for max
-        }
-        if (tl == l && tr == r) {
-            return tree[v].maxVal;
-        }
-        int tm = (tl + tr) / 2;
-        T leftValue = queryMax(v * 2, tl, tm, l, min(r, tm));
-        T rightValue = queryMax(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r);
-        return max(leftValue, rightValue);
-    }
-
-    T queryMin(int v, int tl, int tr, int l, int r) {
-        if (l > r) {
-            return numeric_limits<T>::max(); // Neutral element for min
-        }
-        if (tl == l && tr == r) {
-            return tree[v].minVal;
-        }
-        int tm = (tl + tr) / 2;
-        T leftValue = queryMin(v * 2, tl, tm, l, min(r, tm));
-        T rightValue = queryMin(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r);
-        return min(leftValue, rightValue);
-    }
-
-    void updateAdd(int v, int tl, int tr, int l, int r, T newVal) {
-        if (l > r) return;
-        if (l == tl && r == tr) {
-            tree[v].addVal += newVal;
-            tree[v].sumVal += newVal * (tr - tl + 1);
-            tree[v].maxVal += newVal;
-            tree[v].minVal += newVal;
-        } else {
-            int tm = (tl + tr) / 2;
-            updateAdd(v * 2, tl, tm, l, min(r, tm), newVal);
-            updateAdd(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r, newVal);
-            tree[v].sumVal = tree[v * 2].sumVal + tree[v * 2 + 1].sumVal;
-            tree[v].maxVal = max(tree[v * 2].maxVal, tree[v * 2 + 1].maxVal);
-            tree[v].minVal = min(tree[v * 2].minVal, tree[v * 2 + 1].minVal);
+            int m = (l + r) / 2;
+            build(2 * i, l, m);
+            build(2 * i + 1, m + 1, r);
+            pull(i, l, r);
         }
     }
 
@@ -122,12 +104,74 @@ public:
     void rangeAdd(int l, int r, T newVal) {
         updateAdd(1, 0, n - 1, l, r, newVal);
     }
+
+    void rangeXOR(int l, int r, T newVal) {
+        updateXOR(1, 0, n - 1, l, r, newVal);
+    }
+
+    void updateAdd(int i, int l, int r, int ql, int qr, T newVal) {
+        push(i, l, r);
+        if (qr < l || ql > r) return;
+        if (ql <= l && qr >= r) {
+            tree[i].addVal += newVal;
+            push(i, l, r);
+        } else {
+            int m = (l + r) / 2;
+            updateAdd(2 * i, l, m, ql, qr, newVal);
+            updateAdd(2 * i + 1, m + 1, r, ql, qr, newVal);
+            pull(i, l, r);
+        }
+    }
+
+    void updateXOR(int i, int l, int r, int ql, int qr, T newVal) {
+        push(i, l, r);
+        if (qr < l || ql > r) return;
+        if (ql <= l && qr >= r) {
+            tree[i].xorVal ^= newVal;
+            push(i, l, r);
+        } else {
+            int m = (l + r) / 2;
+            updateXOR(2 * i, l, m, ql, qr, newVal);
+            updateXOR(2 * i + 1, m + 1, r, ql, qr, newVal);
+            pull(i, l, r);
+        }
+    }
+
+    T querySum(int i, int l, int r, int ql, int qr) {
+        push(i, l, r);
+        if (qr < l || ql > r) return 0;
+        if (ql <= l && qr >= r) return tree[i].sumVal;
+        int m = (l + r) / 2;
+        T leftValue = querySum(2 * i, l, m, ql, qr);
+        T rightValue = querySum(2 * i + 1, m + 1, r, ql, qr);
+        return leftValue + rightValue;
+    }
+
+    T queryMax(int i, int l, int r, int ql, int qr) {
+        push(i, l, r);
+        if (qr < l || ql > r) return numeric_limits<T>::min();
+        if (ql <= l && qr >= r) return tree[i].maxVal;
+        int m = (l + r) / 2;
+        T leftValue = queryMax(2 * i, l, m, ql, qr);
+        T rightValue = queryMax(2 * i + 1, m + 1, r, ql, qr);
+        return max(leftValue, rightValue);
+    }
+
+    T queryMin(int i, int l, int r, int ql, int qr) {
+        push(i, l, r);
+        if (qr < l || ql > r) return numeric_limits<T>::max();
+        if (ql <= l && qr >= r) return tree[i].minVal;
+        int m = (l + r) / 2;
+        T leftValue = queryMin(2 * i, l, m, ql, qr);
+        T rightValue = queryMin(2 * i + 1, m + 1, r, ql, qr);
+        return min(leftValue, rightValue);
+    }
 };
 
 int main() {
-    vector<int> arr = {12, 18, 24, 36, 48};
+    vector<int> arr = {1, 2, 3, 4, 5};
 
-    // Create an instance of the SegmentTree for addition, maximum, and minimum (integer type)
+    // Create an instance of the SegmentTree for addition, maximum, minimum, and XOR (integer type)
     SegmentTree<int> multiOpSegmentTree(arr);
 
     // Example usage of various queries and updates
@@ -137,6 +181,9 @@ int main() {
 
     // Add 5 to the range [1, 3]
     multiOpSegmentTree.rangeAdd(1, 3, 5);
+
+    // XOR 3 to the range [2, 4]
+    multiOpSegmentTree.rangeXOR(2, 4, 3);
 
     // Query again after updates
     cout << "Sum in range [1, 3]: " << multiOpSegmentTree.rangeSumQuery(1, 3) << endl;
