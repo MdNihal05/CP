@@ -12,7 +12,7 @@ typedef unsigned long long ull;
 #define vpi vector<pair<int,int>>
 #define vs vector<string>
 #define all(x) x.begin(),x.end()
-#define loop(n) for (int i = 0; i < (n); i++)
+#define rept(i,n) for (int i = 0; i < (n); i++)
 #define print(x) (x)?cout<<"YES":cout<<"NO";
 const int mod = 1e9 + 7, inf = LONG_LONG_MAX, N = 1e6;
 
@@ -34,7 +34,7 @@ template<class T>ostream& operator<<(ostream &os, vector<T> &a) {for (auto &i : 
 
 void __solve() {
 
-    
+
 
 }
 
