@@ -12,14 +12,14 @@ typedef unsigned long long ull;
 #define vpi vector<pair<int,int>>
 #define vs vector<string>
 #define all(x) x.begin(),x.end()
-#define rep(i, n) for (int i = 0; i < (n); i++)
+#define loop(n) for (int i = 0; i < (n); i++)
 #define print(x) (x)?cout<<"YES":cout<<"NO";
 const int mod = 1e9 + 7, inf = LONG_LONG_MAX, N = 1e6;
 
 template<class T, class V>istream& operator>>(istream &in, pair<T, V> &a) {in >> a.first >> a.second; return in;}
 template<class T>istream& operator>>(istream &in, vector<T> &a) {for (auto &i : a) {in >> i;} return in;}
 template<class T, class V>ostream& operator<<(ostream &os, pair<T, V> &a) {os << a.first << " " << a.second; return os;}
-template<class T>ostream& operator<<(ostream &os, vector<T> &a) {for (int i = 0 ; i < sz(a) ; i++) {if (i != 0) {os << ' ';} os << a[i];} return os;}
+template<class T>ostream& operator<<(ostream &os, vector<T> &a) {for (auto &i : a) {os << i << " ";} return os;}
 
 
 #ifndef ONLINE_JUDGE
@@ -29,6 +29,7 @@ template<class T>ostream& operator<<(ostream &os, vector<T> &a) {for (int i = 0 
 #endif
 
 /*=========================================== SOLUTION ===========================================*/
+
 
 
 void __solve() {
