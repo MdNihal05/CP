@@ -4,7 +4,7 @@ const int LOG = 17, N = 1e5 + 10;
 vector<int>lg(100);
 vector<vector<int>>dp(LOG + 1, vector<int>(100));
 vector<vector<int>>st(LOG + 1, vector<int>(100));
-// space complexity O(nlogn) , Time complexity O(1)
+// space complexity O(nlogn) , Time complexity O(1) for min query o(logn) for sum query
 int main()
 {
 	int n; cin >> n;
