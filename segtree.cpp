@@ -1,6 +1,6 @@
 class SegmentTree {
     typedef int T;
-    static constexpr T unit = 0;        //change this
+    static constexpr T unit = 0;        //change this {INT_MAX,INT_MIN,0}
     T fun(T a, T b) { return a + b; } // (any associative fn)
     vector<T> s; int n;
 public:
