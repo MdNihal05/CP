@@ -7,14 +7,15 @@ using namespace std;
 typedef unsigned long long ull;
 #define endl "\n"
 #define int long long
+#define Lint int64_t
 #define sz(a) (int)a.size()
 #define vi vector<int>
 #define vpi vector<pair<int,int>>
 #define vs vector<string>
 #define all(x) x.begin(),x.end()
-#define rept(i,n) for (int i = 0; i < (n); i++)
+#define rep(i,n) for (int i = 0; i < (n); i++)
 #define print(x) (x)?cout<<"YES":cout<<"NO";
-const int mod = 1e9 + 7, inf = LONG_LONG_MAX, N = 1e6;
+const int mod = 1e9 + 7, inf = LONG_LONG_MAX, N = 1e6+7;
 
 template<class T, class V>istream& operator>>(istream &in, pair<T, V> &a) {in >> a.first >> a.second; return in;}
 template<class T>istream& operator>>(istream &in, vector<T> &a) {for (auto &i : a) {in >> i;} return in;}
@@ -23,7 +24,7 @@ template<class T>ostream& operator<<(ostream &os, vector<T> &a) {for (auto &i : 
 
 
 #ifndef ONLINE_JUDGE
-#include "debug.hpp"
+#include "/home/anonymous/cpp_files/debug2.hpp"
 #else
 #define debug(x...);
 #endif
@@ -34,7 +35,7 @@ template<class T>ostream& operator<<(ostream &os, vector<T> &a) {for (auto &i : 
 
 void __solve() {
 
-
+    
 
 }
 
@@ -42,7 +43,7 @@ void __solve() {
 
 /*============================================= MAIN =============================================*/
 
-signed  main()
+int32_t  main()
 {
     Md_Nihal;
     int testcases = 1;    cin >> testcases;
