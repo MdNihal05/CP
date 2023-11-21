@@ -15,10 +15,6 @@ for r inclusive{
 class SegmentTree {
     int n;
     vector<vector<int>>Tree;
-    void Merge(vector<int> &a, vector<int>&b, vector<int>&c) {
-        a.resize(b.size() + c.size());
-        merge(all(b), all(c), a.begin());
-    }
     void build(vector<int>&a, int v, int s, int e) {
         if (s + 1 == e) {
             Tree[v] = {a[s]};    // Base Case :
@@ -26,7 +22,7 @@ class SegmentTree {
             int mid = s + (e - s) / 2;
             build(a, 2 * v, s, mid);
             build(a, 2 * v + 1, mid, e);
-            Merge(Tree[v], Tree[2 * v], Tree[2 * v + 1]); // MergeFunction
+            merge(all(Tree[2 * v]), all(Tree[2 * v + 1]), back_inserter(Tree[v])); // MergeFunction
         }
     }
     int get_ans(int v , int s, int e, int lv, int rv, int l , int r) {
