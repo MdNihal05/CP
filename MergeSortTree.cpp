@@ -14,7 +14,7 @@ for r inclusive{
 
 For count of elements
 if (s > r || e < l) {
-            return 0;
+    return 0;
 }
 if (l <= s && e <= r) {
     return lower_bound(all(Tree[v]), rv) - lower_bound(all(Tree[v]), lv);
