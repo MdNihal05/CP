@@ -1,3 +1,17 @@
+//Author : MdNihal
+// returns a value x x>=lv and x<=rv in range l to r 
+// if you want to make r inclusive pass r+1 or make chages mentioned below
+
+
+/*
+for r inclusive{
+    change s+1==e to s==e in build 
+    and range should be (l,mid) and (mid+1,r) in build and get_ans
+}
+*/
+
+
+
 class SegmentTree {
     int n;
     vector<vector<int>>Tree;
