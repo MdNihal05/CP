@@ -8,6 +8,16 @@ for r inclusive{
     change s+1==e to s==e in build 
     and range should be (l,mid) and (mid+1,r) in build and get_ans
 }
+
+For count of elements
+if (l <= s && e <= r) {
+    return lower_bound(all(Tree[v]), rv) - lower_bound(all(Tree[v]), lv);
+}
+int mid = (s + e) / 2;
+int x = get_ans(2 * v, s, mid, lv, rv, l, r);  // change this accordingly
+int y = get_ans(2 * v + 1, mid , e, lv, rv, l, r);
+return x + y; //change this accordingly
+
 */
 
 
