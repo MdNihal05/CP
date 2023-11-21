@@ -8,7 +8,7 @@ for r inclusive{
     change s+1==e to s==e in build 
     and range should be (l,mid) and (mid+1,r) in build and get_ans
     if (s > r || e < l) {
-            return -1;
+        return -1;
     }
 }
 
