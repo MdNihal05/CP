@@ -1,0 +1,26 @@
+[
+	{
+		"keys":["ctrl+enter"],"command":"chain","args":{
+			"commands":[
+				["save"],
+				["astyleformat"],
+				["build"]
+			]
+		}
+	},
+	{
+		"keys":["ctrl+space"],"command":"chain","args":{
+			"commands":[
+				["save"],
+				["astyleformat"],
+				["select_all"],
+				["copy"]
+
+			]
+		}
+	},
+	{ "ctrl+backspace": ["delete"], "command": "right_delete" },
+	{ "keys": ["alt+up"], "command": "swap_line_up" },
+    { "keys": ["alt+down"], "command": "swap_line_down" }
+
+]
