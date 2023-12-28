@@ -1,89 +1,41 @@
-#include<bits/stdc++.h>
-#define int long long
-#define all(x) x.begin(),x.end()
-using namespace std;
+class dijkstra {
+    vi dist, path;
+    int n;
+public:
+    dijkstra(vector<vector<pair<int, int>>>graph, int source) {
+        n = graph.size();
+        dist.assign(n, inf);
+        path.assign(n, -1);
+        dist[source] = 0;
+        set<pair<int, int>> q;
+        q.insert({0, source});
+        while (!q.empty()) {
+            int v = q.begin()->second;
+            q.erase(q.begin());
 
-template <typename T>
-struct Dijkstra {
+            for (auto edge : graph[v]) {
+                int to = edge.first;
+                int len = edge.second;
 
-    int node, edge;
-    vector< vector< pair<int, T> > > adj;
-    vector< T > level;
-    vector<int> parent;
-
-    Dijkstra(int _node, int _edge) : node(_node), edge(_edge) {
-        vector<int>(node + 1).swap(parent);
-        vector<T>(node + 1, numeric_limits<T>::max()).swap(level);
-        vector< vector< pair<int, T> > > (node + 1).swap(adj);
-    }
-
-    void add_edge(int u, int v, T w) {
-        adj[u].push_back({v, w});
-        adj[v].push_back({u, w});
-    }
-
-    void traverse(int src) {
-
-        level[src] = 0;
-        set< pair<T, int> > s {{0, src}};
-        parent[src] = -1;
-
-        while (not s.empty()) {
-            auto it = *s.begin();
-            int cur_node = it.second;
-            T cur_level = it.second;
-            s.erase(s.begin());
-
-            for (auto u : adj[cur_node]) {
-                if (level[u.first] - u.second > cur_level) {
-                    level[u.first] = cur_level + u.second;
-                    parent[u.first] = cur_node;
-                    s.insert({level[u.first], u.first});
+                if (dist[v] + len < dist[to]) {
+                    q.erase({dist[to], to});
+                    dist[to] = dist[v] + len;
+                    path[to] = v;
+                    q.insert({dist[to], to});
                 }
             }
         }
     }
-
-    void print_path(int x) {
-
-        if (level[x] == numeric_limits<T>::max()) {
-            cout << "-1\n";
-            return;
-        }
-
-        if (x == -1) {
-            return;
-        }
-
-        print_path(parent[x]);
-        cout << x << " ";
-
+    int distance(int to) {
+        return dist[to];
     }
+    vi restore_path(int s, int t) {
+        vector<int> p;
+        for (int v = t; v != s; v = path[v])
+            p.push_back(v);
+        p.push_back(s);
+        reverse(p.begin(), p.end());
+        return p;
+    };
 
 };
-
-
-// int32_t main(int argc, char const *argv[])
-// {
-//     ios::sync_with_stdio(false);
-//     cin.tie(nullptr);
-
-
-//     int node, edge;
-//     cin >> node >> edge;
-
-//     Dijkstra<int> d(node, edge);
-
-
-//     while (edge--) {
-//         int x, y;
-//         int w;
-//         cin >> x >> y >> w;
-//         d.add_edge(x, y, w);
-//     }
-
-//     d.traverse(1);
-//     d.print_path(node);
-
-//     return 0;
-// }
