@@ -4,8 +4,8 @@ class dijkstra {
 public:
     dijkstra(vector<vector<pair<int, int>>>graph, int source) {
         n = graph.size();
-        dist.assign(n, inf);
-        path.assign(n, -1);
+        dist.assign(n+1, inf);
+        path.assign(n+1, -1);
         dist[source] = 0;
         set<pair<int, int>> q;
         q.insert({0, source});
