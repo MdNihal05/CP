@@ -1,18 +1,32 @@
-vector<int>dist(n + 1, inf), vis(n + 1);
-    set<pair<int, int>>pq;
-    pq.insert({0, 1});
-    dist[1] = 0;
-    while (pq.size()) {
-        auto [u, v] = *pq.begin();
-        if (vis[v]) continue;
-        vis[v] = 1;
-        pq.erase(pq.begin());
-        for (auto &child : graph[v]) {
-            int x = child.first;
-            int y = child.second;
-            if (dist[v] + y < dist[x]) {
-                dist[x] = dist[v] + y;
-                pq.insert({dist[x], x});
+auto  dijkstra = [&](int s, vi & dist, vi & path) {
+    dist.assign(n, inf);
+    path.assign(n, -1);
+
+    dist[s] = 0;
+    set<pair<int, int>> q;
+    q.insert({0, s});
+    while (!q.empty()) {
+        int v = q.begin()->second;
+        q.erase(q.begin());
+
+        for (auto edge : graph[v]) {
+            int to = edge.first;
+            int len = edge.second;
+
+            if (dist[v] + len < dist[to]) {
+                q.erase({dist[to], to});
+                dist[to] = dist[v] + len;
+                path[to] = v;
+                q.insert({dist[to], to});
             }
         }
     }
+};
+auto restore_path = [&](int s, int t, vector<int> const & p) {
+    vector<int> path;
+    for (int v = t; v != s; v = p[v])
+        path.push_back(v);
+    path.push_back(s);
+    reverse(path.begin(), path.end());
+    return path;
+};
