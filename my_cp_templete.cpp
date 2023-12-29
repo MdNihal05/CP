@@ -39,7 +39,6 @@ template<class key, class value, class cmp = std::less<key>>
 using ordered_map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_node_update>;
 // find_by_order(k)  returns iterator to kth element starting from 0;
 // order_of_key(k) returns count of elements strictly smaller than k;
-typedef gp_hash_table<int, int, hash<int>> ht;
 
 /*----------------------------------------------- PBDS ends --------------------------------------------*/
 
