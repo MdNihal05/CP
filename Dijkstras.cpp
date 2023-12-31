@@ -1,10 +1,10 @@
 vector<int>dist(n + 1, MAX), par(n + 1, -1);
 dist[1] = 0;
-priority_queue < pi , vector <pi> , greater <pi> >  pq ;
+priority_queue < array<int, 2> , vector <array<int, 2>>, greater <array<int, 2>>>  pq ;
 pq.push({0, 1}); // source
 
 while (pq.size() > 0) {
-    int node = pq.top().second;
+    int node = pq.top()[1];
     pq.pop();
     for (auto &child : graph[node]) {
         int c_child = child.first;
