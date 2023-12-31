@@ -1,41 +1,30 @@
-class dijkstra {
-    vi dist, path;
-    int n;
-public:
-    dijkstra(vector<vector<pair<int, int>>>graph, int source) {
-        n = graph.size();
-        dist.assign(n+1, inf);
-        path.assign(n+1, -1);
-        dist[source] = 0;
-        set<pair<int, int>> q;
-        q.insert({0, source});
-        while (!q.empty()) {
-            int v = q.begin()->second;
-            q.erase(q.begin());
+vector<int>dist(n + 1, MAX), par(n + 1, -1);
+dist[1] = 0;
+priority_queue < pi , vector <pi> , greater <pi> >  pq ;
+pq.push({0, 1}); // source
 
-            for (auto edge : graph[v]) {
-                int to = edge.first;
-                int len = edge.second;
-
-                if (dist[v] + len < dist[to]) {
-                    q.erase({dist[to], to});
-                    dist[to] = dist[v] + len;
-                    path[to] = v;
-                    q.insert({dist[to], to});
-                }
-            }
+while (pq.size() > 0) {
+    int node = pq.top().second;
+    pq.pop();
+    for (auto &child : graph[node]) {
+        int c_child = child.first;
+        int ds = child.second;
+        if (dist[c_child] > dist[node] + ds) {
+            dist[c_child] = dist[node] + ds;
+            pq.push({dist[c_child], c_child});
+            par[c_child] = node;
         }
-    }
-    int distance(int to) {
-        return dist[to];
-    }
-    vi restore_path(int s, int t) {
-        vector<int> p;
-        for (int v = t; v != s; v = path[v])
-            p.push_back(v);
-        p.push_back(s);
-        reverse(p.begin(), p.end());
-        return p;
-    };
 
-};
+    }
+}
+if (dist[n] == MAX) {
+    cout << -1;
+    return;
+}
+int source = n; // source
+vi ans;
+while (source > 0) {
+    ans.push_back(source);
+    source = par[source];
+}
+reverse(all(ans));
