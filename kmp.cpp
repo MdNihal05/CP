@@ -19,7 +19,7 @@ vector<int>KMP(string &str, string pat) {
 	int m = int(str.length());
 	int n = int(pat.length());
 	vector<int> longestPrefix = computePrefix(pat);
-    vector<int>ans;
+        vector<int>ans;
 	for (int i = 0, k = 0; i < m; ++i) {
 		if (k > 0 && pat[k] != str[i])
 			k = longestPrefix[k - 1];
