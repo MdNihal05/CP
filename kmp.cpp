@@ -26,7 +26,7 @@ vector<int>KMP(string &str, string pat) {
 		if (str[i] == pat[k])
 			++k;
 		if (k == n) {
-            ans.push_back(i-n+1);
+                        ans.push_back(i-n+1);
 			//more than one pattern
 			k = longestPrefix[k - 1];
 		}
