@@ -1,30 +1,28 @@
-vector<int>dist(n + 1, MAX), par(n + 1, -1);
-dist[1] = 0;
-priority_queue < array<int, 2> , vector <array<int, 2>>, greater <array<int, 2>>>  pq ;
-pq.push({0, 1}); // source
-
-while (pq.size() > 0) {
-    int node = pq.top()[1];
-    pq.pop();
-    for (auto &child : graph[node]) {
-        int c_child = child.first;
-        int ds = child.second;
-        if (dist[c_child] > dist[node] + ds) {
-            dist[c_child] = dist[node] + ds;
-            pq.push({dist[c_child], c_child});
-            par[c_child] = node;
-        }
-
-    }
-}
-if (dist[n] == MAX) {
-    cout << -1;
-    return;
-}
-int source = n; // source
-vi ans;
-while (source > 0) {
-    ans.push_back(source);
-    source = par[source];
-}
-reverse(all(ans));
+vector<int> dist(n + 1, inf); vector<bool> visited(n + 1), parent(n + 1, -1);
+	priority_queue<pii, vector<pii>, greater<pii>> pq;
+	int source = 1; /// change source element
+	dist[source] = 0;
+	pq.push({0, source});
+	while (!pq.empty()) {
+		int dst = pq.top().first;
+		int node = pq.top().second;
+		pq.pop();
+		if (visited[node]) continue;
+		visited[node] = true;
+		for (auto [child, d] : graph[node]) {
+			if (visited[child]) continue;
+			dist[child] = min(dist[child], dst + d);
+			pq.push({dist[child], child});
+			parent[child] = node;
+		}
+	}
+	if (dist[n] == MAX) {
+		cout << -1;
+		return;
+	}
+	vi path;
+	while (source > 0) {
+		path.push_back(source);
+		source = parent[source];
+	}
+	reverse(all(path));
