@@ -18,7 +18,8 @@ typedef unsigned long long ull;
 #define pi pair<int,int>
 #define sz(a) (int)a.size()
 #define vi vector<int>
-#define vpi vector<pair<int,int>>
+#define pii pair<int,int>
+#define vpi vector<pii>
 #define vs vector<string>
 #define all(x) x.begin(),x.end()
 #define ALL(x) x.rbegin(),x.rend()
