@@ -1,0 +1,59 @@
+build system
+
+
+{
+"cmd" : ["g++ -std=gnu++20 $file_name -o $file_base_name && timeout 3s ./$file_base_name<input.txt>output.txt"], 
+"selector" : "source.c",
+"shell": true,
+"working_dir" : "$file_path"
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+settings
+
+{
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"color_scheme": "Monokai.sublime-color-scheme",
+	"theme": "Seti.sublime-theme",
+	"dark_color_scheme": "Monokai.sublime-color-scheme",
+	"light_color_scheme": "Celeste.sublime-color-scheme",
+	"font_size": 11,
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+key bindings
+
+
+[
+	{
+		"keys":["ctrl+enter"],"command":"chain","args":{
+			"commands":[
+				["save"],
+				["astyleformat"],
+				["build"]
+			]
+		}
+	},
+	{
+		"keys":["ctrl+space"],"command":"chain","args":{
+			"commands":[
+				["save"],
+				["astyleformat"],
+				["select_all"],
+				["copy"]
+
+			]
+		}
+	},
+	{ "ctrl+backspace": ["delete"], "command": "right_delete" },
+	{ "keys": ["alt+up"], "command": "swap_line_up" },
+    { "keys": ["alt+down"], "command": "swap_line_down" }
+
+]
