@@ -7,6 +7,9 @@ using namespace std;
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,lzcnt,mmx,abm,avx,avx2,fma")
 #define Md_Nihal ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
 typedef unsigned long long ull;
 #define endl "\n"
 #define int long long
@@ -26,9 +29,6 @@ template<class T, class V>ostream& operator<<(ostream &os, pair<T, V> &a) {os <<
 template<class T>ostream& operator<<(ostream &os, vector<T> &a) {for (auto &i : a) {os << i << " ";} return os;}
 
 /*----------------------------------------------- PBDS --------------------------------------------*/
-
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 
 using namespace __gnu_pbds;
 template<class T>
@@ -53,6 +53,8 @@ using ordered_map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_nod
 
 void __solve() {
 
+
+
 }
 
 
@@ -61,7 +63,7 @@ void __solve() {
 
 int32_t  main()
 {
-    Md_Nihal;
-    int testcases = 1;    cin >> testcases;
-    for (int i = 0; i < testcases; i++, __solve(), cout << endl);
+	Md_Nihal;
+	int testcases = 1;    cin >> testcases;
+	for (int i = 0; i < testcases; i++, __solve(), cout << endl);
 }
