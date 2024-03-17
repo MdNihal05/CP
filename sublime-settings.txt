@@ -1,8 +1,7 @@
 build system
 
-
 {
-"cmd" : ["g++ -std=gnu++20 $file_name -o $file_base_name && timeout 3s ./$file_base_name<input.txt>output.txt"], 
+"cmd" : ["g++ -std=gnu++20 $file_name -O3 -DDEBUG -g -fsanitize=signed-integer-overflow -fsanitize=bounds-strict -fsanitize=address -fsanitize=integer-divide-by-zero -fsanitize=float-divide-by-zero -fsanitize=pointer-overflow -fsanitize=shift-exponent -fsplit-stack -Wshadow -Wall -fconcepts -o $file_base_name && timeout 3s ./$file_base_name<input.txt>output.txt"],
 "selector" : "source.c",
 "shell": true,
 "working_dir" : "$file_path"
@@ -13,16 +12,18 @@ build system
 settings
 
 {
+	"color_scheme": "Packages/Monokai Dark/Monokai Dark.tmTheme",
+	"dark_color_scheme": "Monokai.sublime-color-scheme",
+	"font_size": 11,
 	"ignored_packages":
 	[
-		"Vintage",
+		"Vintage"
 	],
-	"color_scheme": "Monokai.sublime-color-scheme",
-	"theme": "Seti.sublime-theme",
-	"dark_color_scheme": "Monokai.sublime-color-scheme",
+	"index_files": false,
 	"light_color_scheme": "Celeste.sublime-color-scheme",
-	"font_size": 11,
+	"theme": "Seti.sublime-theme"
 }
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,6 +33,7 @@ key bindings
 
 
 [
+	
 	{
 		"keys":["ctrl+enter"],"command":"chain","args":{
 			"commands":[
