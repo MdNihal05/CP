@@ -43,7 +43,6 @@ using ordered_map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_nod
 #ifndef ONLINE_JUDGE
 #include "debug.hpp"
 #else
-#define DEBUG
 #define debug(x...);
 #endif
 
