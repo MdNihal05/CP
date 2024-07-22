@@ -1,0 +1,4 @@
+Acquire::http::Proxy "http://melab1:rgukt12345@staffnet.rgukt.ac.in:3128/";
+Acquire::htts::Proxy "https://melab1:rgukt12345@staffnet.rgukt.ac.in:3128/";
+Acquire::socks::Proxy "socks://melab1:rgukt12345@staffnet.rgukt.ac.in:3128/";
+Acquire::ftp::Proxy "ftp://melab1:rgukt12345@staffnet.rgukt.ac.in:3128/";
